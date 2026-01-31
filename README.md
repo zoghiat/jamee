@@ -13,4 +13,4 @@ If you have a Makefile:
 
 make
 ./game
-لینک سایت:       https://zoghiat.github.io/jamee/
+لینک سایت:      https://zoghiat.github.io/jamee/docs/index.html

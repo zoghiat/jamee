@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pro RayCaster — مستندات فنی</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav container" aria-label="ناوبری اصلی">
+    <a class="brand" href="index.html">Pro RayCaster</a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">خانه</a></li>
+      <li><a class="active" href="devlog.html">مستندات فنی</a></li>
+      <li><a href="gallery.html">گالری</a></li>
+    </ul>
+
+    <a class="nav-github" href="https://github.com/zoghiat/jamee" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<main class="container section">
+  <h1>مستندات فنی (Devlog)</h1>
+  <p class="muted">دو مقاله کوتاه برای نشان دادن درک فنی از پروژه.</p>
+
+  <!-- Semantic HTML: article / section / h3 / p -->
+  <article class="doc">
+    <section>
+      <h3>مقاله ۱ — منطق Raycasting</h3>
+      <p>
+        در Raycasting برای هر ستون صفحه، یک پرتو از موقعیت بازیکن با زاویه مشخص ارسال می‌شود.
+        پرتو با پیمایش شبکه‌ای (مانند DDA) در سلول‌های نقشه حرکت می‌کند تا اولین دیوار را پیدا کند.
+        فاصله برخورد به ارتفاع دیوار روی همان ستون تبدیل می‌شود و در نهایت بافت روی دیوار نگاشت می‌گردد.
+        به این شکل یک نقشه دوبعدی به نمای سه‌بعدی سریع و قابل بازی تبدیل می‌شود.
+      </p>
+    </section>
+  </article>
+
+  <article class="doc">
+    <section>
+      <h3>مقاله ۲ — چالش‌ها</h3>
+      <p>
+        یکی از سخت‌ترین مشکلات، Fish-eye effect بود که باعث می‌شد دیوارها در کناره‌ها غیرطبیعی دیده شوند.
+        با اصلاح فاصله هر پرتو نسبت به زاویه دید (تصحیح پرسپکتیو)، تصویر طبیعی شد. همچنین مدیریت حافظه در C
+        (آزادسازی منابع) مهم بود تا نشت حافظه و کرش رخ ندهد.
+      </p>
+    </section>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>نام و نام خانوادگی: <strong>AMIR ZOGHI</strong> — شماره دانشجویی: <strong>404400016</strong></p>
+    <p>© 2026 Open Source License</p>
+  </div>
+</footer>
+
+</body>
+</html>

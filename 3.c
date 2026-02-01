@@ -205,7 +205,7 @@
         player.rotSpeed = 2.5f;  // charkhes
 
         // Phase 3: View Toggling
-        int editMode = 0; // 0: Play Mode (3D), 1: Edit Mode (2D)
+        int editMode = 0; // 0: Play Mode(3D), 1: Edit Mode(2D)
 
         while (!WindowShouldClose())
         {
@@ -222,19 +222,20 @@
             if (!editMode) {
                 // tagherr dir
                 if (IsKeyDown(KEY_RIGHT)) {
-                    float ang = -player.rotSpeed * dt;
+                    float ang = player.rotSpeed * dt;   // <-- sign fixed
                     float cosA = cosf(ang), sinA = sinf(ang);
                     Vector2 nd = { player.dir.x * cosA - player.dir.y * sinA,
-                                player.dir.x * sinA + player.dir.y * cosA };
+                   player.dir.x * sinA + player.dir.y * cosA };
                     player.dir = normalize(nd);
                 }
                 if (IsKeyDown(KEY_LEFT)) {
-                    float ang = player.rotSpeed * dt;
+                    float ang = -player.rotSpeed * dt;  // <-- sign fixed
                     float cosA = cosf(ang), sinA = sinf(ang);
                     Vector2 nd = { player.dir.x * cosA - player.dir.y * sinA,
-                                player.dir.x * sinA + player.dir.y * cosA };
+                   player.dir.x * sinA + player.dir.y * cosA };
                     player.dir = normalize(nd);
                 }
+
 
                 // w va s baraye inke to khode dir hast
                 Vector2 move = (Vector2){0.0f, 0.0f};
@@ -250,17 +251,17 @@
                 // اگر حرکت وجود دارد نرمالایز کن تا سرعت کنترلی داشته باشیم
                 if (lengthVec2(move) > 0.0f) {
                     move = normalize(move);
-                    move.x *=player.moveSpeed * dt;
-                    move.y *= player.moveSpeed * dt;
+                    move.x  *=player.moveSpeed * dt;
+                    move.y *=player.moveSpeed * dt;
                 }
 
                 // Wall Sliding 
-                float newPosX = player.pos.x + move.x;
-                int mapX = (int)newPosX;
-                int mapY = (int)player.pos.y;
-                if (mapX >= 0 && mapX < MAP_W && mapY >= 0 && mapY < MAP_H) {
+                float newPosX=player.pos.x+move.x;
+                int mapX=(int)newPosX;
+                int mapY= (int)player.pos.y;
+                if (mapX>=0&&mapX<MAP_W&&mapY>=0&&mapY<MAP_H) {
                     if (world_map[mapY][mapX] == 0) {
-                        player.pos.x = newPosX;
+                        player.pos.x=newPosX;
                     } else {
                         // این الس و الس بعدی مهم است چون اگه خورد به دیوار قفل نکند
                         // برخورد در محور X -> لغزش فقط در جهت y ممکن است
@@ -268,9 +269,9 @@
                 }
 
                 float newPosY = player.pos.y + move.y;
-                mapX = (int)player.pos.x;
-                mapY = (int)newPosY;
-                if (mapX >= 0 && mapX < MAP_W && mapY >= 0 && mapY < MAP_H) {
+                mapX=(int)player.pos.x;
+                mapY=(int)newPosY;
+                if (mapX>=0&&mapX<MAP_W&&mapY>=0 &&mapY<MAP_H) {
                     if (world_map[mapY][mapX] == 0) {
                         player.pos.y = newPosY;
                     } else {
@@ -294,7 +295,7 @@
                     }
                     // right click: 0 (خالی کردن دیوار ها )
                     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-                        world_map[my][mx] = 0;
+                        world_map[my][mx]= 0;
                     }
                 }
 
@@ -313,30 +314,30 @@
             BeginDrawing();
             ClearBackground(BLACK);
 
-            if (!editMode) {
+            if(!editMode){
                 // Play Mode: 3D Rendering
                 Render3D(player);
 
                 // Minimap کوچک گوشه (دیباگ)
-                int miniScale = 8;
+                int miniScale= 8;
                 int offX = 10, offY = 10;
-                for (int y = 0; y < MAP_H; y++) {
+                for (int y = 0; y<  MAP_H; y++) {
                     for (int x = 0; x < MAP_W; x++) {
                         Rectangle r = { offX + x * miniScale, offY + y * miniScale, miniScale, miniScale };
                         if (world_map[y][x] == 1) DrawRectangleRec(r, GRAY);
                         else DrawRectangleLines((int)r.x, (int)r.y, (int)r.width, (int)r.height, (Color){80,80,80,255});
                     }
                 }
-                Vector2 pp = { offX + player.pos.x * miniScale, offY + player.pos.y * miniScale };
+                Vector2 pp = { offX+player.pos.x*miniScale,offY+player.pos.y * miniScale };
                 DrawCircleV(pp, 3, BLUE);
                 DrawLine((int)pp.x, (int)pp.y, (int)(pp.x + player.dir.x * 10), (int)(pp.y + player.dir.y * 10), RED);
 
-                DrawText("Play Mode (3D) - Press M to Edit Mode", 10, SCREEN_H - 24, 18, RAYWHITE);
+                DrawText("Play Mode (3D) - Press M to Edit Mode",10,SCREEN_H-24,18,RAYWHITE);
             } else {
                 // Edit Mode: 2D Top-down + mouse edit
                 ClearBackground(PURPLE);
-                DrawTopDownMap(player, 1);
-                DrawText("Edit Mode (2D) - M:Play | Mouse L:1 R:0 | S:Save | L:Load", 10, SCREEN_H - 24, 18, RAYWHITE);
+                DrawTopDownMap(player,1);
+                DrawText("Edit Mode (2D) - M:Play | Mouse L:1 R:0 | S:Save | L:Load",10,SCREEN_H-24,18,RAYWHITE);
             }
 
             EndDrawing();
